@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>Stablecoin Price Fluctuations</title>
+  <!-- 引入 ethers.js 库 -->
+  <!--<script src="https://cdn.jsdelivr.net/npm/ethers@5.0.6/dist/ethers.min.js"></script> -->
+  <script src="./node_modules/ethers/dist/ethers.esm.min.js"></script>
+  
+  <!-- 引入 ECharts 文件 -->
+  <script src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/echarts/5.2.2/echarts.min.js"></script>
+  
+  <style>
+    #chart-container {
+      width: 100%;
+      height: 600px;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="chart-container"></div>
+  <script>
+    // 初始化图表
+    const chart = echarts.init(document.getElementById('chart-container'));
+
+    // 配置项
+    const option = {
+      title: {
+        text: 'Stablecoin Price Fluctuations'
+      },
+      tooltip: {},
+      xAxis: {
+        data: []
+      },
+      yAxis: {},
+      series: [{
+        name: 'Price',
+        type: 'line',
+        data: []
+      }]
+    };
+
+    // 初始化 ethers.js
+    const provider = new ethers.providers.JsonRpcProvider('https://rpc2.sepolia.org/');
+    const contractAddress = '0xD512dBeABD408c9031c370989cB72e8338997fcB';
+    const abi = [{ "inputs": [ { "internalType": "address", "name": "_priceFeed", "type": "address" } ], "stateMutability": "nonpayable", "type": "constructor" }, { "anonymous": false, "inputs": [ { "indexed": true, "internalType": "address", "name": "_owner", "type": "address" }, { "indexed": true, "internalType": "address", "name": "_spender", "type": "address" }, { "indexed": false, "internalType": "uint256", "name": "_amount", "type": "uint256" } ], "name": "Approval", "type": "event" }, { "inputs": [ { "internalType": "address", "name": "_spender", "type": "address" }, { "internalType": "uint256", "name": "_amount", "type": "uint256" } ], "name": "approve", "outputs": [ { "internalType": "bool", "name": "", "type": "bool" } ], "stateMutability": "nonpayable", "type": "function" }, { "anonymous": false, "inputs": [ { "indexed": true, "internalType": "address", "name": "_buyer", "type": "address" }, { "indexed": false, "internalType": "uint256", "name": "_amount", "type": "uint256" }, { "indexed": false, "internalType": "uint256", "name": "_value", "type": "uint256" } ], "name": "Buy", "type": "event" }, { "inputs": [ { "internalType": "uint256", "name": "_amount", "type": "uint256" } ], "name": "buyStableCoin", "outputs": [], "stateMutability": "payable", "type": "function" }, { "inputs": [ { "internalType": "uint256", "name": "_amount", "type": "uint256" } ], "name": "deposit", "outputs": [], "stateMutability": "nonpayable", "type": "function" }, { "anonymous": false, "inputs": [ { "indexed": true, "internalType": "address", "name": "_seller", "type": "address" }, { "indexed": false, "internalType": "uint256", "name": "_amount", "type": "uint256" }, { "indexed": false, "internalType": "uint256", "name": "_value", "type": "uint256" } ], "name": "Sell", "type": "event" }, { "inputs": [ { "internalType": "uint256", "name": "_amount", "type": "uint256" } ], "name": "sellStableCoin", "outputs": [], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [ { "internalType": "address", "name": "_to", "type": "address" }, { "internalType": "uint256", "name": "_amount", "type": "uint256" } ], "name": "transfer", "outputs": [ { "internalType": "bool", "name": "", "type": "bool" } ], "stateMutability": "nonpayable", "type": "function" }, { "anonymous": false, "inputs": [ { "indexed": true, "internalType": "address", "name": "_from", "type": "address" }, { "indexed": true, "internalType": "address", "name": "_to", "type": "address" }, { "indexed": false, "internalType": "uint256", "name": "_amount", "type": "uint256" } ], "name": "Transfer", "type": "event" }, { "inputs": [ { "internalType": "address", "name": "_from", "type": "address" }, { "internalType": "address", "name": "_to", "type": "address" }, { "internalType": "uint256", "name": "_amount", "type": "uint256" } ], "name": "transferFrom", "outputs": [ { "internalType": "bool", "name": "", "type": "bool" } ], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [ { "internalType": "uint256", "name": "_amount", "type": "uint256" } ], "name": "withdraw", "outputs": [], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [ { "internalType": "address", "name": "", "type": "address" }, { "internalType": "address", "name": "", "type": "address" } ], "name": "allowance", "outputs": [ { "internalType": "uint256", "name": "", "type": "uint256" } ], "stateMutability": "view", "type": "function" }, { "inputs": [ { "internalType": "address", "name": "", "type": "address" } ], "name": "balanceOf", "outputs": [ { "internalType": "uint256", "name": "", "type": "uint256" } ], "stateMutability": "view", "type": "function" }, { "inputs": [], "name": "decimals", "outputs": [ { "internalType": "uint8", "name": "", "type": "uint8" } ], "stateMutability": "view", "type": "function" }, { "inputs": [], "name": "getStableCoinPrice", "outputs": [ { "internalType": "uint256", "name": "", "type": "uint256" } ], "stateMutability": "view", "type": "function" }, { "inputs": [ { "internalType": "uint256", "name": "_amount", "type": "uint256" } ], "name": "getStableCoinValue", "outputs": [ { "internalType": "uint256", "name": "", "type": "uint256" } ], "stateMutability": "view", "type": "function" }, { "inputs": [], "name": "name", "outputs": [ { "internalType": "string", "name": "", "type": "string" } ], "stateMutability": "view", "type": "function" }, { "inputs": [], "name": "owner", "outputs": [ { "internalType": "address", "name": "", "type": "address" } ], "stateMutability": "view", "type": "function" }, { "inputs": [], "name": "symbol", "outputs": [ { "internalType": "string", "name": "", "type": "string" } ], "stateMutability": "view", "type": "function" }, { "inputs": [], "name": "totalSupply", "outputs": [ { "internalType": "uint256", "name": "", "type": "uint256" } ], "stateMutability": "view", "type": "function" }];
+    const contract = new ethers.Contract(contractAddress, abi, provider);
+
+
+    // 更新图表数据
+    async function updateChart() {
+      // 模拟获取数据
+      //const price = Math.floor(Math.random() * 1000);
+      //const price = await contract.getStableCoinPrice();
+      const price = await contract.getStableCoinPrice().toString();
+
+      const timestamp = new Date().toLocaleTimeString('en-US', {
+        hour12: false
+      });
+      const data = [timestamp, price];
+
+      // 更新 ECharts 配置项中的数据
+      option.xAxis.data.push(timestamp);
+      //option.series[0].data.push(price);
+      option.series[0].data.push(price.toNumber());
+
+      // 只保留最近的 10 条数据
+      if (option.xAxis.data.length > 10) {
+        option.xAxis.data.shift();
+        option.series[0].data.shift();
+      }
+
+      // 重新渲染图表
+      chart.setOption(option);
+
+      // 每 1 秒更新一次数据
+      setTimeout(updateChart, 1000);
+    }
+
+    // 开始更新图表
+    updateChart();
+  </script>
+</body>
+
+</html>

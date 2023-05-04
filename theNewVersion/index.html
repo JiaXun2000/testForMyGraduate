@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>ECharts Demo</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div id="main"></div>
+  <canvas id="canvas"></canvas>
+  <div id="transaction-container">
+    <h2>交易记录</h2>
+    <!-- <table>
+      <thead>
+        <tr>
+          <th>发送者</th>
+          <th>接收者</th>
+          <th>数量</th>
+        </tr>
+      </thead> -->
+      <table id="transaction-table">
+        <thead>
+          <tr>
+            <th>发送者</th>
+            <th>接收者</th>
+            <th>金额</th>
+          </tr>
+        </thead>  
+      <tbody id="transaction-body">
+      </tbody>
+    </table>
+    <!-- <div id="transaction-pagination">
+      <button id="prev-page-btn" disabled>上一页</button>
+      <button id="next-page-btn">下一页</button>
+    </div> -->
+    <!--交易记录分页器-->
+    <div id="pagination">
+      <!--用于动态添加分页按钮-->
+    </div>
+  </div>
+  
+  <script src="canvas.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/echarts@4.9.0/dist/echarts.min.js"></script>
+  <script src="https://cdn.ethers.io/lib/ethers-5.0.umd.min.js"></script>
+  <script src="priceFluctuation.js"></script>
+  <script src="TradeModel.js"></script>
+    
+
+</body>
+</html>

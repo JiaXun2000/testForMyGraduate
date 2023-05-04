@@ -1,0 +1,64 @@
+/* 第一 */
+#main {
+    width: 600px;
+    height: 400px;
+    margin: 0 auto;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+/* 第二 */
+  #canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: -1;
+  }
+/* 第三 */
+#transaction-container {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 300px;
+  height: 100%;
+  background-color: #fff;
+  box-shadow: -1px 0 5px rgba(0, 0, 0, 0.3);
+  z-index: 1;
+}
+
+  
+  #transaction-container h2 {
+    text-align: center;
+  }
+  
+  #transaction-container table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 10px;
+  }
+  
+  #transaction-container table th {
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    padding: 5px;
+    text-align: center;
+  }
+  
+  #transaction-container table td {
+    border: 1px solid #ccc;
+    padding: 5px;
+    text-align: center;
+  }
+  
+  #transaction-pagination {
+    text-align: center;
+  }
+  
+  #transaction-pagination button {
+    margin: 5px;
+    padding: 5px 10px;
+  }
+
+/* 第四 */
+  
+
